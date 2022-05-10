@@ -2,13 +2,10 @@ package main
 
 import (
 	"fmt"
-<<<<<<< HEAD
 	"io/ioutil"
 	"log"
 	"net/http"
-
-=======
->>>>>>> e60f04387b646b56e4a25c134680274fa8f18b36
+	
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
