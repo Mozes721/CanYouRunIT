@@ -1,4 +1,4 @@
-module github.com/Mozes721/go-modules
+module Mozes721/CanYouRunIt
 
 go 1.18
 

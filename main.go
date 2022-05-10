@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
 
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
@@ -37,4 +40,21 @@ func main() {
 	info.Disk = diskStat.Total / 1024 / 1024
 
 	fmt.Printf("%+v\n", info)
+
+	all_games := "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
+
+	// game_search :="https://store.steampowered.com/api/appdetails?appids="
+
+	api_games(all_games)
+}
+
+func api_games(url string) {
+	resp, err := http.Get(url)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
 }
