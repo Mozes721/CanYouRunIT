@@ -6,7 +6,11 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> baad75792608a9839deeffc91bcd96839c2e5895
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
