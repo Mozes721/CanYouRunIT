@@ -1,32 +1,19 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-<<<<<<< HEAD
 	"io/ioutil"
 	"log"
 	"net/http"
 
-=======
->>>>>>> e60f04387b646b56e4a25c134680274fa8f18b36
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/v3/mem"
 )
 
-// SysInfo saves the basic system information
-type SysInfo struct {
-	Hostname string `bson:hostname`
-	Platform string `bson:platform`
-	CPU      string `bson:cpu`
-	RAM      uint64 `bson:ram`
-	Disk     uint64 `bson:disk`
-}
-
-// func system() {
-// 	hostStat, _ := host.Info()
-// }
+var game_arg string
 
 func main() {
 	hostStat, _ := host.Info()
@@ -43,6 +30,7 @@ func main() {
 	info.Disk = diskStat.Total / 1024 / 1024
 
 	fmt.Printf("%+v\n", info)
+	// fmt.Println(os.Args[1:])
 
 	all_games := "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
 
@@ -59,5 +47,18 @@ func api_games(url string) {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(body))
+
+	var allGames allGames
+
+	if err := json.Unmarshal(body, &allGames); err != nil {
+		fmt.Println("Can not unmarshal JSON")
+	}
+	fmt.Println(PrettyPrint(allGames))
+}
+
+func PrettyPrint(i interface{}) string {
+	// game_arg = os.Args[1:]
+	// s, _ := json.MarshalIndent(i, "", "\t")
+	// println(game_arg)
+	return string(game_arg)
 }
