@@ -8,7 +8,7 @@ type SysInfo struct {
 	RAM      uint64 `bson:ram`
 	Disk     uint64 `bson:disk`
 }
-
+  
 type allGames struct {
 	Applist struct {
 		Apps []struct {
