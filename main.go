@@ -6,11 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> baad75792608a9839deeffc91bcd96839c2e5895
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
@@ -58,11 +54,17 @@ func api_games(url string) {
 		fmt.Println("Can not unmarshal JSON")
 	}
 	fmt.Println(PrettyPrint(allGames))
+	for _, v := range allGames.Applist.Apps {
+		if v.Name == "Wormatozoa Demo" {
+			// s, _ := json.MarshalIndent(v, "", "\t")
+			println(v.Appid)
+		}
+	}
 }
 
 func PrettyPrint(i interface{}) string {
 	// game_arg = os.Args[1:]
-	// s, _ := json.MarshalIndent(i, "", "\t")
+	s, _ := json.MarshalIndent(i, "", "\t")
 	// println(game_arg)
-	return string(game_arg)
+	return string(s)
 }
