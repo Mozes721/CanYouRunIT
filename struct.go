@@ -8,7 +8,7 @@ type SysInfo struct {
 	RAM      uint64 `bson:ram`
 	Disk     uint64 `bson:disk`
 }
-  
+
 type allGames struct {
 	Applist struct {
 		Apps []struct {
@@ -19,7 +19,7 @@ type allGames struct {
 }
 
 type gameInfo struct {
-	Num2131 struct {
+	struct {
 		Success bool `json:"success"`
 		Data    struct {
 			Type                string `json:"type"`
