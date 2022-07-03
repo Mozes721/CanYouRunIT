@@ -37,11 +37,9 @@ func main() {
 	if gameid == 0 {
 		fmt.Println("Game not Found")
 	} else {
-		fmt.Println(gameid)
 		checkGame(gameid)
 	}
 }
-
 func api_games(url string) int {
 	// get all games url
 	resp, err := http.Get(url)
@@ -88,9 +86,27 @@ func checkGame(gameID int) {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 
-	var gameInfo gameInfo
+	jsonData := []byte(`
+			"ref": *
+	`)
 
-	// unmarshall struct to gameInfo
+	type gameData struct {
+		GameNum `json:"appid"`
+	}
+
+	appJson := `{"GameNum":%v}`, strconv
+	var gameInfo gameData
+
+	// _ = json.Unmarshal([]byte(str), &game)
+
+	// fmt.Println(v)
+	// if err != nil {
+	// 	fmt.Println("Unable to convert the JSON string to a struct")
+	// } else {
+	// 	// print the post
+	// 	fmt.Println(PrettyPrint(game))
+	// }
+
 	if err := json.Unmarshal(body, &gameInfo); err != nil {
 		fmt.Println("Can not unmarshal JSON")
 	}
