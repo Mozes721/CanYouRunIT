@@ -1,5 +1,5 @@
 package main
-
+ 
 // SysInfo saves the basic system information
 type SysInfo struct {
 	Hostname string `bson:hostname`
