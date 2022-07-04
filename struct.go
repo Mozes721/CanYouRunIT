@@ -18,9 +18,6 @@ type allGames struct {
 	} `json:"applist"`
 }
 
-type gameData struct {
-	GameNum GameNum `json:"505630"`
-}
 type PcRequirements struct {
 	Minimum     string `json:"minimum"`
 	Recommended string `json:"recommended"`

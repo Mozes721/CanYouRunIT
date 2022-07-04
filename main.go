@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 )
- 
+
 func main() {
 	// hostStat, _ := host.Info()
 	// cpuStat, _ := cpu.Info()
@@ -86,31 +86,20 @@ func checkGame(gameID int) {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 
-	jsonData := []byte(`
-			"ref": *
-	`)
+	makeMap := make(map[string]GameNum)
+	makeMap[str] = GameNum{}
 
-	type gameData struct {
-		GameNum `json:"appid"`
+	j, err := json.Marshal(makeMap)
+	if err != nil {
+		fmt.Printf("Error: %s", err.Error())
+	} else {
+		fmt.Println(string(j))
 	}
 
-	appJson := `{"GameNum":%v}`, strconv
-	var gameInfo gameData
-
-	// _ = json.Unmarshal([]byte(str), &game)
-
-	// fmt.Println(v)
-	// if err != nil {
-	// 	fmt.Println("Unable to convert the JSON string to a struct")
-	// } else {
-	// 	// print the post
-	// 	fmt.Println(PrettyPrint(game))
-	// }
-
-	if err := json.Unmarshal(body, &gameInfo); err != nil {
+	if err := json.Unmarshal(body, &makeMap); err != nil {
 		fmt.Println("Can not unmarshal JSON")
 	}
-	fmt.Println(PrettyPrint(gameInfo))
+	fmt.Println(PrettyPrint(makeMap))
 }
 
 func PrettyPrint(i interface{}) string {
