@@ -112,18 +112,9 @@ type ContentDescriptors struct {
 	Notes interface{}   `json:"notes"`
 }
 type Data struct {
-	Type              string          `json:"type"`
-	Name              string          `json:"name"`
-	SteamAppid        int             `json:"steam_appid"`
-	RequiredAge       int             `json:"required_age"`
-	IsFree            bool            `json:"is_free"`
-	Reviews           string          `json:"reviews"`
-	HeaderImage       string          `json:"header_image"`
-	Website           string          `json:"website"`
-	PcRequirements    PcRequirements  `json:"pc_requirements"`
-	MacRequirements   MacRequirements `json:"mac_requirements"`
-	LinuxRequirements []interface{}   `json:"linux_requirements"`
-	PriceOverview     PriceOverview   `json:"price_overview"`
+	PcRequirements PcRequirements `json:"pc_requirements"`
+	// MacRequirements   MacRequirements `json:"mac_requirements"`
+	// LinuxRequirements []interface{}   `json:"linux_requirements"`
 }
 type GameNum struct {
 	Success bool `json:"success"`

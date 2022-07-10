@@ -99,9 +99,19 @@ func checkGame(gameID int) {
 	if err := json.Unmarshal(body, &makeMap); err != nil {
 		fmt.Println("Can not unmarshal JSON")
 	}
-	fmt.Println(PrettyPrint(makeMap))
-}
+	min_req := makeMap[str].Data.PcRequirements.Minimum
+	// max_req := makeMap[str].Data.PcRequirements.Recommended
+	// getGameMinRequirements(makeMap)
+	// fmt.Printf(PrettyPrint(min_req))
+	output := PrettyPrint(min_req)
+	fmt.Printf("%T\n", output)
+	s := strings.Split(output, "Processor:")[1]
+	// val := s[1]
+	replacer := strings.NewReplacer(`"`, "", "br", "", "\\", "", "/", " ", "u003e", "", "u003c", "", "strong", "", "li", "", "ul", "")
+	replaced := replacer.Replace((s))
+	fmt.Println(replaced)
 
+}
 func PrettyPrint(i interface{}) string {
 	s, _ := json.MarshalIndent(i, "", "\t")
 	return string(s)
