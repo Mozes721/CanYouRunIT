@@ -7,7 +7,7 @@ type SysInfo struct {
 	CPU      string `bson:cpu`
 	RAM      uint64 `bson:ram`
 	Disk     uint64 `bson:disk`
-}
+}  
 
 type allGames struct {
 	Applist struct {
