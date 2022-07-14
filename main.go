@@ -1,5 +1,5 @@
 package main
-   
+
 import (
 	"bufio"
 	"encoding/json"
@@ -32,7 +32,9 @@ func main() {
 	info.RAM = vmStat.Total / 1024 / 1024
 	info.Disk = diskStat.Total / 1024 / 1024
 
-	fmt.Printf("%+v\n", info)
+	fmt.Println("Your PC stats")
+	fmt.Println(info)
+	// fmt.Printf("%+v\n", info)
 
 	all_games := "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
 
@@ -56,7 +58,6 @@ func api_games(url string) int {
 	body, err := ioutil.ReadAll(resp.Body)
 
 	var allGames allGames
-	// unmarshall struct to allGames
 	if err := json.Unmarshal(body, &allGames); err != nil {
 		fmt.Println("Can not unmarshal JSON")
 	}
@@ -82,7 +83,6 @@ func checkGame(gameID int) {
 	// get game details
 	str := strconv.Itoa(gameID)
 	game_search := "https://store.steampowered.com/api/appdetails?appids=" + str
-
 	resp, err := http.Get(game_search)
 	// fmt.Println(PrettyPrint(resp))
 	if err != nil {
@@ -98,25 +98,17 @@ func checkGame(gameID int) {
 	if err != nil {
 		fmt.Printf("Error: %s", err.Error())
 	} else {
-		fmt.Println(string(j))
+		fmt.Printf("Data has been recived as a %T \n", string(j))
 	}
 
 	if err := json.Unmarshal(body, &makeMap); err != nil {
 		fmt.Println("Can not unmarshal JSON")
 	}
 	min_req := makeMap[str].Data.PcRequirements.Minimum
-	// max_req := makeMap[str].Data.PcRequirements.Recommended
-	// getGameMinRequirements(makeMap)
-	// fmt.Printf(PrettyPrint(min_req))
-	fmt.Println(min_req)
+	// fmt.Println(min_req)
 	output := PrettyPrint(min_req)
 
 	GameDataAdd(output)
-
-	// s := strings.Split(output, "Processor:")[1]
-	// val := s[1]
-	// replaced := replacer.Replace((s))
-	// fmt.Println(replaced)
 
 }
 func PrettyPrint(i interface{}) string {
@@ -131,42 +123,12 @@ func getFieldInteger(e, field string) int {
 }
 
 func GameDataAdd(output string) {
-	// m := make(map[string]string)
-	var GameData GameData
-	fmt.Println("passed")
 	replacer := strings.NewReplacer(`"`, "", "br", "", "\\", "", "/", " ", "u003e", "", "u003c", "", "strong", "", "li", "", "ul", "")
-	fmt.Println(output)
-	s := strings.Split(output, "Sound Card:")[1]
-	sound := replacer.Replace((s))
-	// m["Sound Card"] = sound
-
-	st := strings.Split(output, "Storage:")[1]
-	storage := replacer.Replace((st))
-	// m["Storage"] = storage
-
-	nt := strings.Split(output, "Network:")[1]
-	network := replacer.Replace((nt))
-	// m["Network"] = network
-
-	gr := strings.Split(output, "Graphics:")[1]
-	graphics := replacer.Replace((gr))
-	// m["Graphics"] = graphics
-
-	mem := strings.Split(output, "Memory:")[1]
-	memory := replacer.Replace((mem))
-	// m["Memory"] = memory
-
-	pr := strings.Split(output, "Processor:")[1]
-	processor := replacer.Replace(pr)
-	// m["Processor"] = processor
-
-	GameData.SoundCard = sound
-	GameData.Storage = storage
-	GameData.Network = network
-	GameData.Graphics = graphics
-	GameData.Memory = memory
-	GameData.Processor = processor
-
-	fmt.Println(getFieldString(GameData, GameData.Network))
-	fmt.Println(GameData)
+	s := replacer.Replace((output))
+	// t := strings.Trim(s, "class=bb_OS")
+	result := strings.Split(s, ":")
+	fmt.Println("Ignore class=bb_")
+	for i := range result {
+		fmt.Println(result[i])
+	}
 }

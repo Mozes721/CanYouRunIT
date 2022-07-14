@@ -2,12 +2,12 @@ package main
 
 // SysInfo saves the basic system information
 type SysInfo struct {
-	Hostname string `bson:hostname`
-	Platform string `bson:platform`
-	CPU      string `bson:cpu`
-	RAM      uint64 `bson:ram`
-	Disk     uint64 `bson:disk`
-}  
+	Hostname string
+	Platform string
+	CPU      string
+	RAM      uint64
+	Disk     uint64
+}
 
 type allGames struct {
 	Applist struct {
@@ -122,10 +122,11 @@ type GameNum struct {
 }
 
 type GameData struct {
-	SoundCard string
-	Storage   string
-	Network   string
-	Graphics  string
-	Memory    string
-	Processor string
+	// SoundCard string
+	Data []interface{}
+	// Storage string
+	// // Network   string
+	// Graphics  string
+	// Memory    string
+	// Processor string
 }
