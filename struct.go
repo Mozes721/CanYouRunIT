@@ -1,5 +1,5 @@
 package main
- 
+
 // SysInfo saves the basic system information
 type SysInfo struct {
 	Hostname string `bson:hostname`
@@ -119,4 +119,13 @@ type Data struct {
 type GameNum struct {
 	Success bool `json:"success"`
 	Data    Data `json:"data"`
+}
+
+type GameData struct {
+	SoundCard string
+	Storage   string
+	Network   string
+	Graphics  string
+	Memory    string
+	Processor string
 }
