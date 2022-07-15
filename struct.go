@@ -59,6 +59,12 @@ type Platforms struct {
 	Mac     bool `json:"mac"`
 	Linux   bool `json:"linux"`
 }
+
+type Metacritic struct {
+	Score int    `json:"score"`
+	URL   string `json:"url"`
+}
+
 type Categories struct {
 	ID          int    `json:"id"`
 	Description string `json:"description"`
@@ -113,20 +119,12 @@ type ContentDescriptors struct {
 }
 type Data struct {
 	PcRequirements PcRequirements `json:"pc_requirements"`
+	PriceOverview  PriceOverview  `json:"price_overview"`
+	Metacritic     Metacritic     `json:"metacritic"`
 	// MacRequirements   MacRequirements `json:"mac_requirements"`
 	// LinuxRequirements []interface{}   `json:"linux_requirements"`
 }
 type GameNum struct {
 	Success bool `json:"success"`
 	Data    Data `json:"data"`
-}
-
-type GameData struct {
-	// SoundCard string
-	Data []interface{}
-	// Storage string
-	// // Network   string
-	// Graphics  string
-	// Memory    string
-	// Processor string
 }

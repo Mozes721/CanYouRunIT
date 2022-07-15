@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"reflect"
 	"strconv"
 	"strings"
 
@@ -34,18 +33,15 @@ func main() {
 
 	fmt.Println("Your PC stats")
 	fmt.Println(info)
-	// fmt.Printf("%+v\n", info)
 
 	all_games := "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
-
-	// game_search :="https://store.steampowered.com/api/appdetails?appids="
 	gameid := api_games(all_games)
-
 	if gameid == 0 {
 		fmt.Println("Game not Found")
 	} else {
 		checkGame(gameid)
 	}
+
 }
 func api_games(url string) int {
 	// get all games url
@@ -105,10 +101,24 @@ func checkGame(gameID int) {
 		fmt.Println("Can not unmarshal JSON")
 	}
 	min_req := makeMap[str].Data.PcRequirements.Minimum
-	// fmt.Println(min_req)
 	output := PrettyPrint(min_req)
-
 	GameDataAdd(output)
+	fmt.Println("Would you like to see the game price and Metacritic score? \n ")
+	fmt.Println("Answer with yes or no:")
+	input := bufio.NewScanner(os.Stdin)
+	for input.Scan() {
+		if input.Text() == "yes" {
+			metacritic := makeMap[str].Data.Metacritic.Score
+			getScore(metacritic)
+			price := makeMap[str].Data.PriceOverview.Final
+			getPrice(price)
+			break
+		} else {
+			fmt.Println("Exiting...")
+			break
+		}
+	}
+	// getPriceScore(makeMap)
 
 }
 func PrettyPrint(i interface{}) string {
@@ -116,19 +126,20 @@ func PrettyPrint(i interface{}) string {
 	return string(s)
 }
 
-func getFieldInteger(e, field string) int {
-	r := reflect.ValueOf(e)
-	f := reflect.Indirect(r).FieldByName(field)
-	return int(f.Int())
-}
-
 func GameDataAdd(output string) {
 	replacer := strings.NewReplacer(`"`, "", "br", "", "\\", "", "/", " ", "u003e", "", "u003c", "", "strong", "", "li", "", "ul", "")
 	s := replacer.Replace((output))
-	// t := strings.Trim(s, "class=bb_OS")
 	result := strings.Split(s, ":")
 	fmt.Println("Ignore class=bb_")
 	for i := range result {
 		fmt.Println(result[i])
 	}
+}
+
+func getScore(output int) {
+	fmt.Println(output)
+}
+
+func getPrice(output int) {
+	fmt.Println(output)
 }
