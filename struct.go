@@ -120,11 +120,25 @@ type ContentDescriptors struct {
 type Data struct {
 	PcRequirements PcRequirements `json:"pc_requirements"`
 	PriceOverview  PriceOverview  `json:"price_overview"`
-	Metacritic     Metacritic     `json:"metacritic"`
-	// MacRequirements   MacRequirements `json:"mac_requirements"`
-	// LinuxRequirements []interface{}   `json:"linux_requirements"`
 }
 type GameNum struct {
 	Success bool `json:"success"`
 	Data    Data `json:"data"`
+}
+
+type toUSD struct {
+	// Success bool    `json:"success"`
+	// Query   Query   `json:"query"`
+	// Info    Info    `json:"info"`
+	// Date    string  `json:"date"`
+	Result float64 `json:"result"`
+}
+type Query struct {
+	From   string `json:"from"`
+	To     string `json:"to"`
+	Amount int    `json:"amount"`
+}
+type Info struct {
+	Timestamp int     `json:"timestamp"`
+	Rate      float64 `json:"rate"`
 }

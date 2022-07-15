@@ -80,7 +80,6 @@ func checkGame(gameID int) {
 	str := strconv.Itoa(gameID)
 	game_search := "https://store.steampowered.com/api/appdetails?appids=" + str
 	resp, err := http.Get(game_search)
-	// fmt.Println(PrettyPrint(resp))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -103,22 +102,6 @@ func checkGame(gameID int) {
 	min_req := makeMap[str].Data.PcRequirements.Minimum
 	output := PrettyPrint(min_req)
 	GameDataAdd(output)
-	fmt.Println("Would you like to see the game price and Metacritic score? \n ")
-	fmt.Println("Answer with yes or no:")
-	input := bufio.NewScanner(os.Stdin)
-	for input.Scan() {
-		if input.Text() == "yes" {
-			metacritic := makeMap[str].Data.Metacritic.Score
-			getScore(metacritic)
-			price := makeMap[str].Data.PriceOverview.Final
-			getPrice(price)
-			break
-		} else {
-			fmt.Println("Exiting...")
-			break
-		}
-	}
-	// getPriceScore(makeMap)
 
 }
 func PrettyPrint(i interface{}) string {
@@ -130,16 +113,7 @@ func GameDataAdd(output string) {
 	replacer := strings.NewReplacer(`"`, "", "br", "", "\\", "", "/", " ", "u003e", "", "u003c", "", "strong", "", "li", "", "ul", "")
 	s := replacer.Replace((output))
 	result := strings.Split(s, ":")
-	fmt.Println("Ignore class=bb_")
 	for i := range result {
 		fmt.Println(result[i])
 	}
-}
-
-func getScore(output int) {
-	fmt.Println(output)
-}
-
-func getPrice(output int) {
-	fmt.Println(output)
 }
