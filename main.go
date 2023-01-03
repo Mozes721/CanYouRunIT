@@ -1,28 +1,26 @@
 package main
-  
+
 import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"github.com/shirou/gopsutil/cpu"
+	"github.com/shirou/gopsutil/disk"
+	"github.com/shirou/gopsutil/host"
+	"github.com/shirou/gopsutil/mem"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
-
-	"github.com/shirou/gopsutil/cpu"
-	"github.com/shirou/gopsutil/disk"
-	"github.com/shirou/gopsutil/host"
-	"github.com/shirou/gopsutil/mem"
 )
 
 func main() {
 	hostStat, _ := host.Info()
 	cpuStat, _ := cpu.Info()
 	vmStat, _ := mem.VirtualMemory()
-	diskStat, _ := disk.Usage("\\")
-
+	diskStat, _ := disk.Usage("//")
 	info := new(SysInfo)
 
 	info.Hostname = hostStat.Hostname
@@ -32,7 +30,8 @@ func main() {
 	info.Disk = diskStat.Total / 1024 / 1024
 
 	fmt.Println("Your PC stats")
-	fmt.Println(info)
+	output := PrettyPrint(info)
+	fmt.Println(output)
 
 	all_games := "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
 	gameid := api_games(all_games)
@@ -89,13 +88,6 @@ func checkGame(gameID int) {
 	makeMap := make(map[string]GameNum)
 	makeMap[str] = GameNum{}
 
-	j, err := json.Marshal(makeMap)
-	if err != nil {
-		fmt.Printf("Error: %s", err.Error())
-	} else {
-		fmt.Printf("Data has been recived as a %T \n", string(j))
-	}
-
 	if err := json.Unmarshal(body, &makeMap); err != nil {
 		fmt.Println("Can not unmarshal JSON")
 	}
@@ -104,6 +96,7 @@ func checkGame(gameID int) {
 	GameDataAdd(output)
 
 }
+
 func PrettyPrint(i interface{}) string {
 	s, _ := json.MarshalIndent(i, "", "\t")
 	return string(s)
